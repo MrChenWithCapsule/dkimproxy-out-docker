@@ -4,7 +4,7 @@ set -e
 set_env() {
     local name="$1"
     local default="$2"
-    if [[ -z "${!name}" ]]
+    if [ -z "${!name}" ]
     then
         export "$name"="$default"
     fi
