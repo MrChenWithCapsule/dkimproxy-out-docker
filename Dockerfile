@@ -1,6 +1,7 @@
 FROM alpine
-RUN apk add --no-cache dkimproxy
+RUN apk add --no-cache dkimproxy socat
+COPY ./entry.sh /var/local/
 USER dkimproxy:dkimproxy
-ENTRYPOINT [ "dkimproxy.out" ]
-CMD [ "--conf_file=/etc/dkimproxy/dkimproxy_out.conf" ]
+ENTRYPOINT [ "sh" ]
+CMD [ "/var/local/entry.sh" ]
 EXPOSE 10027
