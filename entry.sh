@@ -1,17 +1,12 @@
 #!/bin/bash
 set -e
 
-set_env() {
-    local name="$1"
-    local default="$2"
-    if [ -z "${!name}" ]
-    then
-        export "$name"="$default"
-    fi
-}
-
-set_env "RELAY_HOST" "opensmtpd"
-set_env "RELAY_PORT" "24"
+if [[ -z "$RELAY_HOST" ]]; then
+    RELAY_HOST="opensmtpd"
+fi
+if [[ -z "$RELAY_PORT" ]]; then
+    RELAY_PORT="24"
+fi
 
 socat "tcp-listen:$RELAY_PORT" "tcp-connect:$RELAY_HOST"":$RELAY_PORT" &
 exec dkimproxy.out --conf_file=/etc/dkimproxy/dkimproxy_out.conf
